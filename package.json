@@ -1,0 +1,28 @@
+{
+  "name": "tech-blog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daviewave/tech-blog.git"
+  },
+  "author": "David Silveira",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/daviewave/tech-blog/issues"
+  },
+  "homepage": "https://github.com/daviewave/tech-blog#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "handlebars": "^4.7.7",
+    "hbs": "^4.2.0",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.12.0-beta.3"
+  }
+}
