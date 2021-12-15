@@ -8,3 +8,13 @@ const PORT = process.env.PORT || 3001;
 
 const sequalize = require("./config/connection");
 const SequalizeStore = require("connect-session-sequelize")(session.Store);
+
+const sess = {
+  secret: "Super secret secret",
+  cookie: {},
+  resave: false,
+  saveUninitialized: true,
+  store: new SequalizeStore({
+    db: sequalize,
+  }),
+};
