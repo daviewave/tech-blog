@@ -35,6 +35,6 @@ const newComment = [
   },
 ];
 
-const postSeeds = () => User.bulkCreate(newPost);
+const commentSeeds = () => User.bulkCreate(newComment);
 
-module.exports = postSeeds;
+module.exports = commentSeeds;
