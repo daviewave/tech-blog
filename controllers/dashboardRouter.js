@@ -74,14 +74,16 @@ router.get("/", withAuth, (req, res) => {
     })
       .then((db_posts) => {
         if (!db_posts) {
-          res.status(404).json({ message: "No post found with this id" });
+          res
+            .status(404)
+            .json({ message: "no posts associated with the ID entered" });
           return;
         }
 
-        const post = db_posts.get({ plain: true });
+        const currentPost = db_posts.get({ plain: true });
 
         res.render("edit-post", {
-          post,
+          currentPost,
           loggedIn: true,
         });
       })
@@ -120,8 +122,9 @@ router.get("/", withAuth, (req, res) => {
       ],
     })
       .then((db_posts) => {
-        // serialize data before passing to template
-        const posts = db_posts.map((post) => post.get({ plain: true }));
+        const posts = db_posts.map((currentPost) =>
+          currentPost.get({ plain: true })
+        );
         res.render("create-post", { posts, loggedIn: true });
       })
       .catch((err) => {
@@ -130,3 +133,5 @@ router.get("/", withAuth, (req, res) => {
       });
   });
 });
+
+module.exports = router;
