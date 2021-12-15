@@ -38,3 +38,13 @@ router.get("/", (req, res) => {
       res.status(500).json(err);
     });
 });
+
+//gets the login page
+router.get("/login", (req, res) => {
+  if (req.session.loggedIn) {
+    res.redirect("/");
+    return;
+  }
+
+  res.render("login");
+});
