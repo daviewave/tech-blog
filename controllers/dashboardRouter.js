@@ -43,4 +43,53 @@ router.get("/", withAuth, (req, res) => {
           res.status(500).json(err);
         });
     });
+
+  //code to edit posts based on id
+  router.get("/edit/:id", withAuth, (req, res) => {
+    Post.findOne({
+      where: {
+        id: req.params.id,
+      },
+      attributes: ["id", "title", "post_message", "created_at"],
+      include: [
+        {
+          model: Comment,
+          attributes: [
+            "id",
+            "comment_text",
+            "post_id",
+            "user_id",
+            "created_at",
+          ],
+          include: {
+            model: User,
+            attributes: ["username", "twitter", "github"],
+          },
+        },
+        {
+          model: User,
+          attributes: ["username"],
+        },
+      ],
+    })
+      .then((db_posts) => {
+        if (!db_posts) {
+          res.status(404).json({ message: "No post found with this id" });
+          return;
+        }
+
+        const post = db_posts.get({ plain: true });
+
+        res.render("edit-post", {
+          post,
+          loggedIn: true,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+  });
+
+  //create a new post
 });
