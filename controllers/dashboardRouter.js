@@ -63,7 +63,7 @@ router.get("/", withAuth, (req, res) => {
           ],
           include: {
             model: User,
-            attributes: ["username", "twitter", "github"],
+            attributes: ["username"],
           },
         },
         {
@@ -92,4 +92,41 @@ router.get("/", withAuth, (req, res) => {
   });
 
   //create a new post
+  router.get("/create/", withAuth, (req, res) => {
+    Post.findAll({
+      where: {
+        user_id: req.session.user_id,
+      },
+      attributes: ["id", "title", "post_message", "created_at"],
+      include: [
+        {
+          model: Comment,
+          attributes: [
+            "id",
+            "comment_text",
+            "post_id",
+            "user_id",
+            "created_at",
+          ],
+          include: {
+            model: User,
+            attributes: ["username"],
+          },
+        },
+        {
+          model: User,
+          attributes: ["username"],
+        },
+      ],
+    })
+      .then((db_posts) => {
+        // serialize data before passing to template
+        const posts = db_posts.map((post) => post.get({ plain: true }));
+        res.render("create-post", { posts, loggedIn: true });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+  });
 });
